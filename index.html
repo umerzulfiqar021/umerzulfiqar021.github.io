@@ -1,143 +1,848 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Umer Zulfiqar - React Native Developer</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-  <style>
-    body {
-      font-family: 'Inter', sans-serif;
-      margin: 0;
-      background: #f5f7fa;
-      color: #1f2937;
-      line-height: 1.6;
-    }
-    header {
-      background: #0f172a;
-      color: #fff;
-      padding: 2rem;
-      text-align: center;
-    }
-    header h1 {
-      font-size: 2.5rem;
-      margin-bottom: 0.5rem;
-    }
-    header h2 {
-      font-size: 1.2rem;
-      font-weight: 400;
-    }
-    .container {
-      max-width: 900px;
-      margin: auto;
-      padding: 2rem;
-    }
-    section {
-      margin-bottom: 3rem;
-    }
-    h3 {
-      font-size: 1.5rem;
-      color: #0f172a;
-      margin-bottom: 1rem;
-    }
-    ul {
-      list-style: none;
-      padding-left: 0;
-    }
-    li {
-      background: #ffffff;
-      border: 1px solid #e5e7eb;
-      border-radius: 8px;
-      padding: 1rem;
-      margin-bottom: 1rem;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-    }
-    a {
-      color: #3b82f6;
-      text-decoration: none;
-      font-weight: 600;
-    }
-    .contact-info, .social-links {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1rem;
-    }
-    .badge {
-      display: inline-block;
-      background: #e0f2fe;
-      color: #0369a1;
-      padding: 0.25rem 0.5rem;
-      border-radius: 4px;
-      margin: 0.25rem;
-      font-size: 0.9rem;
-    }
-    .card-title {
-      font-weight: 700;
-    }
-  </style>
-</head>
-<body>
-  <header>
-    <h1>Umer Zulfiqar</h1>
-    <h2>React Native Frontend Developer | Mobile App Engineer</h2>
-  </header>
-  <div class="container">
-    <section>
-      <h3>About Me</h3>
-      <p>
-        Passionate React Native developer building powerful and scalable mobile apps. Experienced with state management, REST APIs, and test automation. I bring a collaborative mindset to build real-world digital products.
-      </p>
-    </section>
-
-    <section>
-      <h3>Skills</h3>
-      <div>
-        <span class="badge">React Native</span>
-        <span class="badge">JavaScript (ES6+)</span>
-        <span class="badge">TypeScript</span>
-        <span class="badge">Redux</span>
-        <span class="badge">Context API</span>
-        <span class="badge">Supabase</span>
-        <span class="badge">Expo</span>
-        <span class="badge">Styled Components</span>
-        <span class="badge">REST APIs</span>
-        <span class="badge">UI/UX Design</span>
-        <span class="badge">Git & GitHub</span>
-        <span class="badge">Appium</span>
+    <meta charset="UTF-8">
+    <title>Umer Zulfiqar - React Native Developer</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" />
+    <style>
+      body {
+        font-family: 'Inter', sans-serif;
+        margin: 0;
+        background: #0f172a;
+        color: #e5e7eb;
+        min-height: 100vh;
+        font-size: 1.08rem;
+        font-weight: 500;
+        letter-spacing: 0.01em;
+      }
+      .navbar {
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        background: rgba(15,23,42,0.95);
+        box-shadow: 0 2px 12px rgba(31,41,55,0.10);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1.2rem 2.5rem;
+        backdrop-filter: blur(6px);
+        transition: background 0.3s;
+      }
+      .nav-logo {
+        display: flex;
+        align-items: center;
+        gap: 0.7rem;
+      }
+      .nav-title {
+        font-size: 1.3rem;
+        font-weight: 700;
+        color: #3b82f6;
+        letter-spacing: 0.5px;
+      }
+      .navbar .avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        border: 2px solid #3b82f6;
+        box-shadow: 0 2px 8px rgba(31,41,55,0.10);
+        margin-bottom: 0;
+      }
+      .nav-links {
+        display: flex;
+        gap: 2rem;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+      .nav-links a {
+        color: #e5e7eb;
+        font-weight: 600;
+        text-decoration: none;
+        font-size: 1rem;
+        padding: 0.3rem 0.7rem;
+        border-radius: 6px;
+        transition: background 0.2s, color 0.2s;
+      }
+      .nav-links a:hover {
+        background: #3b82f6;
+        color: #fff;
+      }
+      .hero {
+        background: linear-gradient(120deg, #0f172a 60%, #1e293b 100%);
+        color: #e5e7eb;
+        padding: 5rem 2rem 3rem 2rem;
+        text-align: center;
+        border-bottom-left-radius: 32px;
+        border-bottom-right-radius: 32px;
+        box-shadow: 0 8px 32px rgba(31,41,55,0.18);
+        margin-bottom: 2.5rem;
+      }
+      .hero h1 {
+        font-size: 3rem;
+        font-weight: 800;
+        color: #fff;
+        margin-bottom: 1rem;
+        letter-spacing: 1px;
+      }
+      .hero h2 {
+        font-size: 1.4rem;
+        font-weight: 500;
+        color: #3b82f6;
+        margin-bottom: 0.5rem;
+        letter-spacing: 0.2px;
+      }
+      .hero p {
+        font-size: 1.15rem;
+        color: #e5e7eb;
+        opacity: 0.85;
+        margin-bottom: 0;
+      }
+      .container {
+        max-width: 1000px;
+        margin: auto;
+        padding: 2.5rem 2rem;
+        display: flex;
+        flex-direction: column;
+        gap: 2.5rem;
+      }
+      .section-row {
+        display: flex;
+        align-items: flex-start;
+        gap: 2.5rem;
+        margin-bottom: 0;
+      }
+      .section-icon {
+        font-size: 2.5rem;
+        margin-top: 0.2rem;
+        flex-shrink: 0;
+        color: #3b82f6;
+        filter: drop-shadow(0 2px 8px #3b82f633);
+      }
+      .section-content {
+        flex: 1;
+      }
+      section {
+        background: rgba(30,41,59,0.85);
+        border-radius: 24px;
+        box-shadow: 0 8px 32px rgba(31,41,55,0.13);
+        padding: 2.5rem 2rem;
+        border: 1px solid #1e293b;
+        margin-bottom: 0;
+        transition: box-shadow 0.2s, transform 0.2s;
+        will-change: box-shadow, transform;
+      }
+      section[data-aos] {
+        opacity: 0;
+        transform: translateY(40px);
+        transition: opacity 0.6s, transform 0.6s;
+      }
+      section.aos-animate {
+        opacity: 1 !important;
+        transform: none !important;
+      }
+      h3 {
+        font-size: 1.5rem;
+        color: #3b82f6;
+        margin-bottom: 1rem;
+        font-weight: 700;
+        letter-spacing: 0.5px;
+      }
+      .badge {
+        display: inline-block;
+        background: linear-gradient(90deg, #e0f2fe 60%, #bae6fd 100%);
+        color: #0369a1;
+        padding: 0.4rem 0.9rem;
+        border-radius: 8px;
+        margin: 0.25rem 0.4rem 0.25rem 0;
+        font-size: 1rem;
+        font-weight: 600;
+        box-shadow: 0 2px 8px rgba(3,105,161,0.07);
+        border: none;
+        letter-spacing: 0.2px;
+      }
+      .project-card {
+        background: #f5f7fa;
+        color: #1e293b;
+        border-radius: 18px;
+        box-shadow: 0 4px 24px rgba(31,41,55,0.10);
+        padding: 1.5rem 1.2rem;
+        margin-bottom: 1.5rem;
+        transition: transform 0.2s, box-shadow 0.2s;
+        will-change: transform, box-shadow;
+        display: flex;
+        align-items: center;
+        gap: 1.2rem;
+      }
+      .project-card:hover {
+        transform: scale(1.04);
+        box-shadow: 0 8px 32px rgba(59,130,246,0.18);
+      }
+      .project-icon {
+        font-size: 2rem;
+        color: #3b82f6;
+        margin-right: 0.7rem;
+      }
+      .project-content {
+        flex: 1;
+      }
+      .project-title {
+        font-weight: 700;
+        font-size: 1.15rem;
+        color: #0f172a;
+        margin-bottom: 0.3rem;
+      }
+      .project-link {
+        color: #3b82f6;
+        text-decoration: none;
+        font-weight: 600;
+        transition: color 0.2s;
+        border-bottom: 2px solid transparent;
+        padding-bottom: 2px;
+      }
+      .project-link:hover {
+        color: #0f172a;
+        border-bottom: 2px solid #3b82f6;
+      }
+      .contact-info, .social-links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1.5rem;
+        align-items: center;
+      }
+      .social-links a {
+        background: #3b82f611;
+        color: #3b82f6;
+        padding: 0.5rem 1.2rem;
+        border-radius: 8px;
+        font-weight: 600;
+        transition: background 0.2s, color 0.2s;
+        text-decoration: none;
+        margin-right: 0.5rem;
+        border: 1px solid #bae6fd;
+      }
+      .social-links a:hover {
+        background: #3b82f6;
+        color: #fff;
+        border: 1px solid #3b82f6;
+      }
+      @media (max-width: 900px) {
+        .container {
+          padding: 1.2rem 0.5rem;
+        }
+        .section-row {
+          flex-direction: column;
+          gap: 1.2rem;
+        }
+        section {
+          padding: 1.2rem 0.7rem;
+        }
+        .hero {
+          padding: 3rem 1rem 2rem 1rem;
+        }
+        .navbar {
+          padding: 0.7rem 1rem;
+        }
+        .projects-grid {
+          grid-template-columns: 1fr;
+        }
+        .testimonials-grid, .blog-list {
+          flex-direction: column;
+          gap: 1.2rem;
+        }
+      }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        AOS.init({
+          duration: 800,
+          once: true,
+          offset: 60,
+        });
+        // Smooth scroll for nav links
+        document.querySelectorAll('.nav-links a').forEach(link => {
+          link.addEventListener('click', function(e) {
+            const href = this.getAttribute('href');
+            if (href.startsWith('#')) {
+              e.preventDefault();
+              document.querySelector(href).scrollIntoView({ behavior: 'smooth' });
+            }
+          });
+        });
+      });
+    </script>
+  </head>
+  <body>
+      <nav class="navbar">
+        <div class="nav-logo">
+          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQPBa7yT-4DGey4jyyBWOrSXXAdJl-9iuUjKA&s" alt="Umer Zulfiqar Avatar" class="avatar" />
+          <span class="nav-title">Umer Zulfiqar</span>
+        </div>
+        <ul class="nav-links">
+          <li><a href="#about">Home</a></li>
+          <li><a href="#skills">Skills</a></li>
+          <li><a href="#experience">Experience</a></li>
+          <li><a href="#projects">Projects</a></li>
+          <li><a href="#services">Services</a></li>
+          <li><a href="#testimonials">Testimonials</a></li>
+          <li><a href="#blog">Blog</a></li>
+          <li><a href="#faq">FAQ</a></li>
+          <li><a href="#contact">Contact</a></li>
+          <li><a href="#online">Online</a></li>
+        </ul>
+      </nav>
+      <section class="hero" id="hero" data-aos="fade-down" data-aos-delay="100">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQPBa7yT-4DGey4jyyBWOrSXXAdJl-9iuUjKA&s" alt="Profile" class="hero-avatar" />
+        <h1 class="hero-title">Umer Zulfiqar</h1>
+        <h2 class="hero-subtitle">React Native Frontend Developer</h2>
+        <p class="hero-desc">Building scalable mobile apps with modern tech</p>
+        <div class="hero-cta" data-aos="zoom-in" data-aos-delay="400" style="margin-top: 2.5rem;">
+          <a href="#contact" class="btn btn-primary btn-large" style="margin-right: 1.5rem; min-width: 180px;">Contact Me</a>
+          <a href="#projects" class="btn btn-secondary btn-large" style="min-width: 180px;">View Projects</a>
+        </div>
+      </section>
+      <div class="container">
+        <section id="about" data-aos="fade-up" data-aos-delay="200">
+          <div class="section-row">
+            <div class="section-icon">👨‍💻</div>
+            <div class="section-content">
+              <h3>About Me</h3>
+              <p>
+                Passionate React Native developer focused on creating beautiful, scalable mobile apps. Experienced in state management, REST APIs, and test automation. I bring a collaborative mindset to build real-world digital products.
+              </p>
+              <div class="about-animation"></div>
+            </div>
+          </div>
+        </section>
+        <section id="skills" data-aos="fade-right" data-aos-delay="300">
+          <div class="section-row">
+            <div class="section-icon">🛠️</div>
+            <div class="section-content">
+              <h3>Skills</h3>
+              <div class="skills-list">
+                <span class="badge">React Native</span>
+                <span class="badge">JavaScript (ES6+)</span>
+                <span class="badge">TypeScript</span>
+                <span class="badge">Redux</span>
+                <span class="badge">Context API</span>
+                <span class="badge">Supabase</span>
+                <span class="badge">Expo</span>
+                <span class="badge">Styled Components</span>
+                <span class="badge">REST APIs</span>
+                <span class="badge">UI/UX Design</span>
+                <span class="badge">Git & GitHub</span>
+                <span class="badge">Appium</span>
+                <span class="badge">Firebase</span>
+                <span class="badge">Figma</span>
+              </div>
+            </div>
+          </div>
+        </section>
+        <section id="experience" data-aos="fade-left" data-aos-delay="400">
+          <div class="section-row">
+            <div class="section-icon">🏢</div>
+            <div class="section-content">
+              <h3>Experience</h3>
+              <div class="timeline">
+                <div class="timeline-item" data-aos="fade-up" data-aos-delay="100">
+                  <div class="timeline-dot"></div>
+                  <div class="timeline-content">
+                    <strong>Intern</strong> @ Codek Technologies (Nov 2024 - May 2025)
+                    <p>Worked on mobile app development and frontend tasks during internship.</p>
+                  </div>
+                </div>
+                <div class="timeline-item" data-aos="fade-up" data-aos-delay="200">
+                  <div class="timeline-dot"></div>
+                  <div class="timeline-content">
+                    <strong>Developer</strong> @ Codek Technologies (May 2025 - Present)
+                    <p>Currently working as a React Native Developer, building scalable mobile apps and collaborating with cross-functional teams.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        <section id="projects" data-aos="fade-up" data-aos-delay="500">
+          <div class="section-row">
+            <div class="section-icon">📱</div>
+            <div class="section-content">
+              <h3>Projects</h3>
+              <div class="projects-grid">
+                <div class="project-card" data-aos="flip-left" data-aos-delay="100">
+                  <div class="project-icon">💬</div>
+                  <div class="project-content">
+                    <div class="project-title">Chattrix</div>
+                    <div>AI-powered chat app with real-time messaging, group chats, and voice notes. Built with React Native, Supabase, and Expo.</div>
+                    <a class="project-link" href="https://github.com/umerzulfiqar021/chattrix" target="_blank">GitHub Repo</a>
+                  </div>
+                </div>
+                <div class="project-card" data-aos="flip-right" data-aos-delay="200">
+                  <div class="project-icon">🛒</div>
+                  <div class="project-content">
+                    <div class="project-title">ShopEasy</div>
+                    <div>React Native e-commerce app with user-friendly design and secure payment integration using Supabase backend.</div>
+                    <a class="project-link" href="https://github.com/umerzulfiqar021/shopeasy" target="_blank">GitHub Repo</a>
+                  </div>
+                </div>
+                <div class="project-card" data-aos="flip-up" data-aos-delay="300">
+                  <div class="project-icon">🚀</div>
+                  <div class="project-content">
+                    <div class="project-title">AwesomeApp</div>
+                    <div>Cross-platform task management app to boost productivity with modern UI and performance optimization.</div>
+                    <a class="project-link" href="https://github.com/umerzulfiqar021/awesomeapp" target="_blank">GitHub Repo</a>
+                  </div>
+                </div>
+                <div class="project-card" data-aos="flip-down" data-aos-delay="400">
+                  <div class="project-icon">📚</div>
+                  <div class="project-content">
+                    <div class="project-title">EduTrack</div>
+                    <div>Mobile app for students to track assignments, grades, and deadlines. Features push notifications and calendar sync.</div>
+                    <a class="project-link" href="#" target="_blank">Demo</a>
+                  </div>
+                </div>
+                <div class="project-card" data-aos="zoom-in" data-aos-delay="500">
+                  <div class="project-icon">🎨</div>
+                  <div class="project-content">
+                    <div class="project-title">Designify</div>
+                    <div>UI/UX design toolkit for mobile apps. Includes reusable components and live preview features.</div>
+                    <a class="project-link" href="#" target="_blank">Demo</a>
+                  </div>
+                </div>
+                <div class="project-card" data-aos="zoom-in-up" data-aos-delay="600">
+                  <div class="project-icon">🔒</div>
+                  <div class="project-content">
+                    <div class="project-title">SecureVault</div>
+                    <div>End-to-end encrypted notes and password manager for mobile devices. Built with React Native and Firebase.</div>
+                    <a class="project-link" href="#" target="_blank">Demo</a>
+                  </div>
+                </div>
+                <div class="project-card" data-aos="zoom-in-down" data-aos-delay="700">
+                  <div class="project-icon">📈</div>
+                  <div class="project-content">
+                    <div class="project-title">FinTrack</div>
+                    <div>Personal finance tracker with charts, analytics, and budgeting tools. Syncs with cloud storage.</div>
+                    <a class="project-link" href="#" target="_blank">Demo</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        <section id="services" data-aos="fade-right" data-aos-delay="600">
+          <div class="section-row">
+            <div class="section-icon">🧑‍💼</div>
+            <div class="section-content">
+              <h3>Services</h3>
+              <ul class="services-list">
+                <li data-aos="fade-left" data-aos-delay="100">Custom Mobile App Development</li>
+                <li data-aos="fade-left" data-aos-delay="200">UI/UX Design & Prototyping</li>
+                <li data-aos="fade-left" data-aos-delay="300">API Integration & Backend Setup</li>
+                <li data-aos="fade-left" data-aos-delay="400">App Testing & Automation</li>
+                <li data-aos="fade-left" data-aos-delay="500">Consulting & Code Review</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+        <section id="testimonials" data-aos="fade-up" data-aos-delay="700">
+          <div class="section-row">
+            <div class="section-icon">🌟</div>
+            <div class="section-content">
+              <h3>Testimonials</h3>
+              <div class="testimonials-grid">
+                <div class="testimonial-card" data-aos="fade-up" data-aos-delay="100">
+                  <div class="testimonial-quote">“Umer delivered our app on time and exceeded expectations. Highly recommended!”</div>
+                  <div class="testimonial-author">— Sarah, Product Manager</div>
+                </div>
+                <div class="testimonial-card" data-aos="fade-up" data-aos-delay="200">
+                  <div class="testimonial-quote">“Great communication and technical skills. The UI is beautiful and fast.”</div>
+                  <div class="testimonial-author">— Ali, Startup Founder</div>
+                </div>
+                <div class="testimonial-card" data-aos="fade-up" data-aos-delay="300">
+                  <div class="testimonial-quote">“Professional, reliable, and creative. Will work with Umer again!”</div>
+                  <div class="testimonial-author">— John, CTO</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        <section id="blog" data-aos="fade-up" data-aos-delay="800">
+          <div class="section-row">
+            <div class="section-icon">📝</div>
+            <div class="section-content">
+              <h3>Blog</h3>
+              <div class="blog-list">
+                <div class="blog-card" data-aos="fade-right" data-aos-delay="100">
+                  <div class="blog-title">How to Build Scalable Mobile Apps</div>
+                  <div class="blog-desc">Tips and best practices for building mobile apps that grow with your users.</div>
+                  <a href="#" class="blog-link">Read More</a>
+                </div>
+                <div class="blog-card" data-aos="fade-right" data-aos-delay="200">
+                  <div class="blog-title">React Native vs Flutter: 2025 Edition</div>
+                  <div class="blog-desc">A deep dive into the pros and cons of the two leading mobile frameworks.</div>
+                  <a href="#" class="blog-link">Read More</a>
+                </div>
+                <div class="blog-card" data-aos="fade-right" data-aos-delay="300">
+                  <div class="blog-title">Design Systems for Mobile Apps</div>
+                  <div class="blog-desc">How to create reusable components and maintain design consistency.</div>
+                  <a href="#" class="blog-link">Read More</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        <section id="faq" data-aos="fade-up" data-aos-delay="900">
+          <div class="section-row">
+            <div class="section-icon">❓</div>
+            <div class="section-content">
+              <h3>FAQ</h3>
+              <div class="faq-list">
+                <div class="faq-item" data-aos="fade-left" data-aos-delay="100">
+                  <div class="faq-question">What technologies do you use?</div>
+                  <div class="faq-answer">React Native, Expo, Supabase, Firebase, Redux, TypeScript, and more.</div>
+                </div>
+                <div class="faq-item" data-aos="fade-left" data-aos-delay="200">
+                  <div class="faq-question">Do you offer consulting?</div>
+                  <div class="faq-answer">Yes, I provide consulting and code review for mobile projects.</div>
+                </div>
+                <div class="faq-item" data-aos="fade-left" data-aos-delay="300">
+                  <div class="faq-question">Can you help with UI/UX design?</div>
+                  <div class="faq-answer">Absolutely! I design and prototype modern mobile interfaces.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        <section id="contact" data-aos="fade-up" data-aos-delay="1000">
+          <div class="section-row">
+            <div class="section-icon">✉️</div>
+            <div class="section-content">
+              <h3>Contact</h3>
+              <div class="contact-info">
+                <div>Email: <a href="mailto:umerzulfiqar38@uog.edu.pk">umerzulfiqar38@uog.edu.pk</a></div>
+                <div>Phone: <a href="tel:+923079629399">0307 9629399</a></div>
+              </div>
+            </div>
+          </div>
+        </section>
+        <section id="online" data-aos="fade-up" data-aos-delay="1100">
+          <div class="section-row">
+            <div class="section-icon">🌐</div>
+            <div class="section-content">
+              <h3>Find Me Online</h3>
+              <div class="social-links">
+                <a href="https://github.com/umerzulfiqar021" target="_blank">GitHub</a>
+                <a href="https://www.linkedin.com/in/umer-zulfiqar21/" target="_blank">LinkedIn</a>
+                <a href="https://twitter.com/umerzulfiqar21" target="_blank">Twitter</a>
+                <a href="https://www.facebook.com/ranaumer.zulfiqar" target="_blank">Facebook</a>
+                <a href="https://www.instagram.com/ranaumerzulfiqar/?hl=en" target="_blank">Instagram</a>
+              </div>
+            </div>
+          </div>
+        </section>
+        <footer class="footer" data-aos="fade-up" data-aos-delay="1200">
+          <div class="footer-content">
+            <div class="footer-logo">Umer Zulfiqar</div>
+            <div class="footer-links">
+              <a href="#about">Home</a>
+              <a href="#skills">Skills</a>
+              <a href="#projects">Projects</a>
+              <a href="#services">Services</a>
+              <a href="#testimonials">Testimonials</a>
+              <a href="#blog">Blog</a>
+              <a href="#faq">FAQ</a>
+              <a href="#contact">Contact</a>
+              <a href="#online">Online</a>
+            </div>
+            <div class="footer-social">
+              <a href="https://github.com/umerzulfiqar021" target="_blank">GitHub</a>
+              <a href="https://www.linkedin.com/in/umer-zulfiqar21/" target="_blank">LinkedIn</a>
+            </div>
+            <div class="footer-copy">© 2025 Umer Zulfiqar. All rights reserved.</div>
+          </div>
+        </footer>
       </div>
-    </section>
-
-    <section>
-      <h3>Projects</h3>
-      <ul>
-        <li>
-          <div class="card-title">AwesomeApp</div>
-          <p>Cross-platform task management app to boost productivity with modern UI and performance optimization.</p>
-          <a href="https://github.com/umerzulfiqar021/awesomeapp" target="_blank">GitHub Repo</a>
-        </li>
-        <li>
-          <div class="card-title">ShopEasy</div>
-          <p>React Native e-commerce app with user-friendly design and secure payment integration using Supabase backend.</p>
-          <a href="https://github.com/umerzulfiqar021/shopeasy" target="_blank">GitHub Repo</a>
-        </li>
-      </ul>
-    </section>
-
-    <section>
-      <h3>Contact</h3>
-      <div class="contact-info">
-        <div>Email: <a href="mailto:umerzulfiqar38@uog.edu.pk">umerzulfiqar38@uog.edu.pk</a></div>
-        <div>Phone: <a href="tel:+923079629399">0307 9629399</a></div>
-      </div>
-    </section>
-
-    <section>
-      <h3>Find Me Online</h3>
-      <div class="social-links">
-        <a href="https://github.com/umerzulfiqar021" target="_blank">GitHub</a>
-        <a href="https://linkedin.com/in/yourprofile" target="_blank">LinkedIn</a>
-      </div>
-    </section>
-  </div>
-</body>
+      <style>
+        .hero-avatar {
+          width: 180px;
+          height: 180px;
+          border-radius: 50%;
+          object-fit: cover;
+          border: 6px solid #3b82f6;
+          box-shadow: 0 12px 48px #3b82f633;
+          margin-bottom: 2rem;
+          animation: avatarFadeIn 1.2s cubic-bezier(.77,0,.18,1) both;
+        }
+        @keyframes avatarFadeIn {
+          0% { opacity: 0; transform: scale(0.7) translateY(-40px); }
+          100% { opacity: 1; transform: scale(1) translateY(0); }
+        }
+        .btn {
+          display: inline-block;
+          font-family: 'Inter', sans-serif;
+          font-weight: 700;
+          font-size: 1.1rem;
+          border-radius: 8px;
+          padding: 0.8rem 2rem;
+          margin-right: 1rem;
+          margin-bottom: 0.5rem;
+          cursor: pointer;
+          box-shadow: 0 4px 16px #3b82f633;
+          transition: background 0.2s, color 0.2s, transform 0.2s;
+          border: none;
+        }
+        .btn-large {
+          font-size: 1.25rem;
+          padding: 1.1rem 2.5rem;
+        }
+        .btn-primary {
+          background: linear-gradient(90deg, #3b82f6 60%, #2563eb 100%);
+          color: #fff;
+        }
+        .btn-primary:hover {
+          background: #2563eb;
+          color: #fff;
+          transform: scale(1.09);
+        }
+        .btn-secondary {
+          background: #fff;
+          color: #3b82f6;
+          border: 2px solid #3b82f6;
+        }
+        .btn-secondary:hover {
+          background: #3b82f6;
+          color: #fff;
+          transform: scale(1.09);
+        }
+        .projects-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+          gap: 2rem;
+        }
+        .project-card {
+          animation: projectCardAnim 1.2s cubic-bezier(.77,0,.18,1) both;
+        }
+        @keyframes projectCardAnim {
+          0% { opacity: 0; transform: scale(0.8) translateY(40px); }
+          100% { opacity: 1; transform: scale(1) translateY(0); }
+        }
+        .timeline {
+          border-left: 3px solid #3b82f6;
+          padding-left: 2rem;
+        }
+        .timeline-item {
+          margin-bottom: 2rem;
+          position: relative;
+        }
+        .timeline-dot {
+          position: absolute;
+          left: -2.1rem;
+          top: 0.5rem;
+          width: 1.2rem;
+          height: 1.2rem;
+          background: #3b82f6;
+          border-radius: 50%;
+          box-shadow: 0 2px 8px #3b82f633;
+        }
+        .timeline-content {
+          background: rgba(59,130,246,0.07);
+          border-radius: 12px;
+          padding: 1rem 1.5rem;
+          box-shadow: 0 2px 8px #3b82f633;
+        }
+        .services-list {
+          list-style: none;
+          padding: 0;
+          margin: 0;
+        }
+        .services-list li {
+          background: rgba(59,130,246,0.07);
+          color: #3b82f6;
+          border-radius: 8px;
+          padding: 0.8rem 1.2rem;
+          margin-bottom: 0.7rem;
+          font-weight: 600;
+          font-size: 1.05rem;
+          box-shadow: 0 2px 8px #3b82f633;
+          transition: background 0.2s, transform 0.2s;
+        }
+        .services-list li:hover {
+          background: #3b82f6;
+          color: #fff;
+          transform: scale(1.04);
+        }
+        .testimonials-grid {
+          display: flex;
+          gap: 2rem;
+          flex-wrap: wrap;
+        }
+        .testimonial-card {
+          background: #fff;
+          color: #0f172a;
+          border-radius: 16px;
+          box-shadow: 0 4px 24px #3b82f633;
+          padding: 1.5rem 1.2rem;
+          min-width: 280px;
+          max-width: 340px;
+          margin-bottom: 1.5rem;
+          transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .testimonial-card:hover {
+          transform: scale(1.04);
+          box-shadow: 0 8px 32px #3b82f6cc;
+        }
+        .testimonial-quote {
+          font-size: 1.1rem;
+          font-style: italic;
+          margin-bottom: 0.7rem;
+        }
+        .testimonial-author {
+          font-size: 0.95rem;
+          color: #3b82f6;
+          font-weight: 600;
+        }
+        .blog-list {
+          display: flex;
+          gap: 2rem;
+          flex-wrap: wrap;
+        }
+        .blog-card {
+          background: #fff;
+          color: #0f172a;
+          border-radius: 16px;
+          box-shadow: 0 4px 24px #3b82f633;
+          padding: 1.5rem 1.2rem;
+          min-width: 280px;
+          max-width: 340px;
+          margin-bottom: 1.5rem;
+          transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .blog-card:hover {
+          transform: scale(1.04);
+          box-shadow: 0 8px 32px #3b82f6cc;
+        }
+        .blog-title {
+          font-weight: 700;
+          font-size: 1.1rem;
+          color: #3b82f6;
+          margin-bottom: 0.3rem;
+        }
+        .blog-desc {
+          font-size: 0.98rem;
+          margin-bottom: 0.7rem;
+        }
+        .blog-link {
+          color: #3b82f6;
+          text-decoration: none;
+          font-weight: 600;
+          transition: color 0.2s;
+          border-bottom: 2px solid transparent;
+          padding-bottom: 2px;
+        }
+        .blog-link:hover {
+          color: #0f172a;
+          border-bottom: 2px solid #3b82f6;
+        }
+        .faq-list {
+          display: flex;
+          flex-direction: column;
+          gap: 1.2rem;
+        }
+        .faq-item {
+          background: #fff;
+          color: #0f172a;
+          border-radius: 12px;
+          box-shadow: 0 2px 8px #3b82f633;
+          padding: 1rem 1.5rem;
+        }
+        .faq-question {
+          font-weight: 700;
+          color: #3b82f6;
+          margin-bottom: 0.3rem;
+        }
+        .faq-answer {
+          font-size: 0.98rem;
+        }
+        .footer {
+          background: #0f172a;
+          color: #e5e7eb;
+          padding: 3rem 2rem 2rem 2rem;
+          border-top-left-radius: 32px;
+          border-top-right-radius: 32px;
+          box-shadow: 0 -8px 32px #3b82f633;
+          margin-top: 3rem;
+        }
+        .footer-content {
+          max-width: 1000px;
+          margin: auto;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 1.5rem;
+        }
+        .footer-logo {
+          font-size: 1.5rem;
+          font-weight: 700;
+          color: #3b82f6;
+        }
+        .footer-links {
+          display: flex;
+          gap: 1.2rem;
+          flex-wrap: wrap;
+        }
+        .footer-links a {
+          color: #e5e7eb;
+          text-decoration: none;
+          font-weight: 600;
+          transition: color 0.2s;
+        }
+        .footer-links a:hover {
+          color: #3b82f6;
+        }
+        .footer-social {
+          display: flex;
+          gap: 1rem;
+        }
+        .footer-social a {
+          color: #3b82f6;
+          text-decoration: none;
+          font-weight: 600;
+          transition: color 0.2s;
+        }
+        .footer-social a:hover {
+          color: #fff;
+        }
+        .footer-copy {
+          font-size: 0.95rem;
+          color: #e5e7ebbb;
+          margin-top: 1rem;
+        }
+        @media (max-width: 900px) {
+          .container {
+            padding: 1.2rem 0.5rem;
+          }
+          .section-row {
+            flex-direction: column;
+            gap: 1.2rem;
+          }
+          section {
+            padding: 1.2rem 0.7rem;
+          }
+          .hero {
+            padding: 3rem 1rem 2rem 1rem;
+          }
+          .navbar {
+            padding: 0.7rem 1rem;
+          }
+          .projects-grid {
+            grid-template-columns: 1fr;
+          }
+          .testimonials-grid, .blog-list {
+            flex-direction: column;
+            gap: 1.2rem;
+          }
+        }
+      </style>
+  </body>
 </html>
