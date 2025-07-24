@@ -249,8 +249,8 @@
         66% { transform: translateY(20px) rotate(240deg); }
       }
       .navbar {
-        position: fixed;
-        top: 0;
+        position: fixed !important;
+        top: 0 !important;
         left: 0;
         right: 0;
         z-index: 1000;
@@ -266,16 +266,30 @@
         animation: slideDown 0.8s ease-out;
         min-height: 60px;
         box-sizing: border-box;
+        visibility: visible;
+        opacity: 1;
+        width: 100%;
+        transform: translateY(0);
       }
 
       @keyframes slideDown {
         from {
-          transform: translateY(-100%);
-          opacity: 0;
+          transform: translateY(-20px);
+          opacity: 0.8;
         }
         to {
           transform: translateY(0);
           opacity: 1;
+        }
+      }
+
+      /* Ensure mobile menu button is not affected by navbar animation */
+      @media (max-width: 768px) {
+        .navbar .mobile-menu-btn {
+          animation: none !important;
+          transform: translateY(0) !important;
+          opacity: 1 !important;
+          visibility: visible !important;
         }
       }
 
@@ -297,6 +311,35 @@
         border-radius: 8px;
         position: relative;
         z-index: 1001;
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+      }
+
+      /* EMERGENCY FIX - Force mobile menu button visibility */
+      .mobile-menu-btn {
+        display: block !important;
+        position: absolute !important;
+        top: 50% !important;
+        right: 1rem !important;
+        transform: translateY(-50%) !important;
+        background: #3b82f6 !important;
+        color: white !important;
+        border: none !important;
+        width: 40px !important;
+        height: 40px !important;
+        border-radius: 4px !important;
+        font-size: 18px !important;
+        z-index: 9999 !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+        cursor: pointer !important;
+      }
+
+      @media (min-width: 769px) {
+        .mobile-menu-btn {
+          display: none !important;
+        }
       }
 
       .mobile-menu-btn:hover {
@@ -469,378 +512,237 @@
 
       @keyframes hangingSwing {
         0%, 100% { 
-          transform: translateY(0px) rotate(0deg) scale(1); 
+          transform: translateY(0px) scale(1); 
           box-shadow: 0 12px 48px rgba(59, 130, 246, 0.4);
-          filter: brightness(1) hue-rotate(0deg);
         }
-        20% { 
-          transform: translateY(-12px) rotate(-1.5deg) scale(1.01); 
-          box-shadow: 0 20px 58px rgba(59, 130, 246, 0.6);
-          filter: brightness(1.05) hue-rotate(10deg);
-        }
-        40% { 
-          transform: translateY(3px) rotate(0.5deg) scale(0.98); 
-          box-shadow: 0 15px 45px rgba(59, 130, 246, 0.4);
-          filter: brightness(0.95) hue-rotate(-5deg);
-        }
-        60% { 
-          transform: translateY(-6px) rotate(1deg) scale(1.005); 
-          box-shadow: 0 18px 52px rgba(59, 130, 246, 0.5);
-          filter: brightness(1.02) hue-rotate(5deg);
-        }
-        80% { 
-          transform: translateY(1px) rotate(-0.5deg) scale(0.99); 
-          box-shadow: 0 14px 42px rgba(59, 130, 246, 0.3);
-          filter: brightness(0.98) hue-rotate(-3deg);
+        50% { 
+          transform: translateY(-8px) scale(1.01); 
+          box-shadow: 0 18px 58px rgba(59, 130, 246, 0.6);
         }
       }
 
-      /* Technology Hanging Lines */
+      /* Technology Hanging Lines - Optimized */
       .hero-avatar-container {
         position: relative;
         display: inline-block;
         margin-top: 1rem;
         margin-bottom: 1rem;
         overflow: visible;
+        will-change: transform;
       }
 
-      /* Circuit Board Background */
+      /* Simplified Circuit Board Background */
       .hero-avatar-container::before {
         content: '';
         position: absolute;
-        top: -200px;
-        left: -100px;
-        right: -100px;
-        height: 200px;
+        top: -180px;
+        left: -80px;
+        right: -80px;
+        height: 180px;
         background: 
-          linear-gradient(90deg, transparent 49%, rgba(59, 130, 246, 0.2) 50%, transparent 51%),
-          linear-gradient(0deg, transparent 49%, rgba(59, 130, 246, 0.2) 50%, transparent 51%),
-          radial-gradient(circle at 20% 20%, rgba(59, 130, 246, 0.1) 0%, transparent 50%),
-          radial-gradient(circle at 80% 40%, rgba(147, 197, 253, 0.1) 0%, transparent 50%);
-        background-size: 30px 30px, 30px 30px, 60px 60px, 80px 80px;
-        opacity: 0.6;
-        animation: circuitPulse 4s ease-in-out infinite;
+          linear-gradient(90deg, transparent 49%, rgba(59, 130, 246, 0.1) 50%, transparent 51%),
+          linear-gradient(0deg, transparent 49%, rgba(59, 130, 246, 0.1) 50%, transparent 51%);
+        background-size: 40px 40px, 40px 40px;
+        opacity: 0.4;
+        animation: circuitPulse 6s ease-in-out infinite;
         z-index: 1;
       }
 
       @keyframes circuitPulse {
-        0%, 100% { opacity: 0.6; transform: scale(1); }
-        50% { opacity: 0.9; transform: scale(1.02); }
+        0%, 100% { opacity: 0.4; }
+        50% { opacity: 0.6; }
       }
 
-      /* Main hanging tech lines */
+      /* Optimized tech lines */
       .hanging-line {
         position: absolute;
-        background: linear-gradient(180deg, var(--accent-primary), rgba(59, 130, 246, 0.3), transparent);
+        background: linear-gradient(180deg, var(--accent-primary), rgba(59, 130, 246, 0.2));
         opacity: 0.8;
-        animation: techLineBounce 3s ease-in-out infinite;
+        animation: techLineBounce 4s ease-in-out infinite;
         z-index: 5;
-        border-radius: 2px;
-        box-shadow: 0 0 10px rgba(59, 130, 246, 0.5);
+        border-radius: 1px;
+        will-change: transform;
       }
 
-      /* Primary tech lines with circuit patterns */
+      /* Primary tech lines - simplified */
       .hanging-line-1 {
-        width: 4px;
-        height: 150px;
-        top: -150px;
-        left: 25%;
-        transform-origin: top center;
-        animation-delay: 0s;
-        background: linear-gradient(180deg, #3b82f6, #1d4ed8, rgba(59, 130, 246, 0.2));
-        box-shadow: 
-          0 0 15px rgba(59, 130, 246, 0.8),
-          inset 1px 0 0 rgba(255, 255, 255, 0.3);
-      }
-
-      .hanging-line-1::before {
-        content: '';
-        position: absolute;
-        top: 20%;
-        left: -8px;
-        width: 20px;
-        height: 2px;
-        background: linear-gradient(90deg, transparent, #60a5fa, transparent);
-        animation: dataStream 2s linear infinite;
-      }
-
-      .hanging-line-1::after {
-        content: '';
-        position: absolute;
-        top: 60%;
-        left: -6px;
-        width: 16px;
-        height: 2px;
-        background: linear-gradient(90deg, transparent, #93c5fd, transparent);
-        animation: dataStream 2s linear infinite 0.5s;
-      }
-
-      .hanging-line-2 {
         width: 3px;
         height: 120px;
         top: -120px;
-        left: 50%;
-        transform-origin: top center;
-        animation-delay: 0.8s;
-        background: linear-gradient(180deg, #60a5fa, #3b82f6, rgba(96, 165, 250, 0.2));
-        box-shadow: 
-          0 0 12px rgba(96, 165, 250, 0.7),
-          inset 1px 0 0 rgba(255, 255, 255, 0.2);
+        left: 25%;
+        animation-delay: 0s;
+        background: linear-gradient(180deg, #3b82f6, rgba(59, 130, 246, 0.2));
+        box-shadow: 0 0 8px rgba(59, 130, 246, 0.4);
       }
 
-      .hanging-line-2::before {
-        content: '';
-        position: absolute;
-        top: 30%;
-        right: -10px;
-        width: 24px;
-        height: 1px;
-        background: linear-gradient(90deg, transparent, #3b82f6, transparent);
-        animation: dataStream 1.8s linear infinite;
-      }
-
-      .hanging-line-3 {
-        width: 4px;
-        height: 140px;
-        top: -140px;
-        right: 25%;
-        transform-origin: top center;
-        animation-delay: 1.6s;
-        background: linear-gradient(180deg, #2563eb, #1e40af, rgba(37, 99, 235, 0.2));
-        box-shadow: 
-          0 0 18px rgba(37, 99, 235, 0.9),
-          inset 1px 0 0 rgba(255, 255, 255, 0.4);
-      }
-
-      .hanging-line-3::before {
-        content: '';
-        position: absolute;
-        top: 40%;
-        left: -12px;
-        width: 28px;
-        height: 2px;
-        background: linear-gradient(90deg, transparent, #2563eb, transparent);
-        animation: dataStream 2.2s linear infinite;
-      }
-
-      .hanging-line-4 {
+      .hanging-line-2 {
         width: 2px;
         height: 100px;
         top: -100px;
-        left: 15%;
-        transform-origin: top center;
-        animation-delay: 0.4s;
-        background: linear-gradient(180deg, #93c5fd, #60a5fa, rgba(147, 197, 253, 0.2));
-        box-shadow: 0 0 8px rgba(147, 197, 253, 0.6);
+        left: 50%;
+        animation-delay: 1s;
+        background: linear-gradient(180deg, #60a5fa, rgba(96, 165, 250, 0.2));
+        box-shadow: 0 0 6px rgba(96, 165, 250, 0.4);
       }
 
-      .hanging-line-5 {
+      .hanging-line-3 {
         width: 3px;
         height: 110px;
         top: -110px;
-        right: 15%;
-        transform-origin: top center;
-        animation-delay: 1.2s;
-        background: linear-gradient(180deg, #1d4ed8, #1e3a8a, rgba(29, 78, 216, 0.2));
-        box-shadow: 0 0 12px rgba(29, 78, 216, 0.7);
+        right: 25%;
+        animation-delay: 2s;
+        background: linear-gradient(180deg, #2563eb, rgba(37, 99, 235, 0.2));
+        box-shadow: 0 0 8px rgba(37, 99, 235, 0.4);
       }
 
-      /* New advanced tech lines */
-      .hanging-line-6 {
-        width: 2px;
+      .hanging-line-4 {
+        width: 1px;
         height: 80px;
         top: -80px;
-        left: 35%;
-        transform-origin: top center;
-        animation-delay: 2s;
-        background: linear-gradient(180deg, #818cf8, #6366f1, rgba(129, 140, 248, 0.2));
-        box-shadow: 0 0 10px rgba(129, 140, 248, 0.6);
+        left: 15%;
+        animation-delay: 0.5s;
+        background: linear-gradient(180deg, #93c5fd, rgba(147, 197, 253, 0.2));
+        box-shadow: 0 0 4px rgba(147, 197, 253, 0.3);
       }
 
-      .hanging-line-7 {
+      .hanging-line-5 {
         width: 2px;
         height: 90px;
         top: -90px;
+        right: 15%;
+        animation-delay: 1.5s;
+        background: linear-gradient(180deg, #1d4ed8, rgba(29, 78, 216, 0.2));
+        box-shadow: 0 0 6px rgba(29, 78, 216, 0.4);
+      }
+
+      .hanging-line-6 {
+        width: 1px;
+        height: 70px;
+        top: -70px;
+        left: 35%;
+        animation-delay: 2.5s;
+        background: linear-gradient(180deg, #818cf8, rgba(129, 140, 248, 0.2));
+        box-shadow: 0 0 4px rgba(129, 140, 248, 0.3);
+      }
+
+      .hanging-line-7 {
+        width: 1px;
+        height: 75px;
+        top: -75px;
         right: 35%;
-        transform-origin: top center;
-        animation-delay: 2.4s;
-        background: linear-gradient(180deg, #a78bfa, #8b5cf6, rgba(167, 139, 250, 0.2));
-        box-shadow: 0 0 10px rgba(167, 139, 250, 0.6);
+        animation-delay: 3s;
+        background: linear-gradient(180deg, #a78bfa, rgba(167, 139, 250, 0.2));
+        box-shadow: 0 0 4px rgba(167, 139, 250, 0.3);
       }
 
-      /* Data stream animation */
-      @keyframes dataStream {
-        0% { 
-          opacity: 0; 
-          transform: translateX(-100%); 
-        }
-        50% { 
-          opacity: 1; 
-          transform: translateX(0%); 
-        }
-        100% { 
-          opacity: 0; 
-          transform: translateX(100%); 
-        }
-      }
-
-      /* Technology bounce animation */
+      /* Simplified bounce animation */
       @keyframes techLineBounce {
         0%, 100% { 
-          transform: translateY(0) rotate(0deg) scaleY(1);
+          transform: translateY(0) scaleY(1);
           opacity: 0.8;
-          box-shadow: 0 0 10px rgba(59, 130, 246, 0.5);
         }
-        15% { 
-          transform: translateY(-8px) rotate(-1deg) scaleY(1.05);
+        50% { 
+          transform: translateY(-4px) scaleY(1.02);
           opacity: 1;
-          box-shadow: 0 0 15px rgba(59, 130, 246, 0.8);
-        }
-        30% { 
-          transform: translateY(5px) rotate(0.5deg) scaleY(0.95);
-          opacity: 0.9;
-          box-shadow: 0 0 12px rgba(59, 130, 246, 0.6);
-        }
-        45% { 
-          transform: translateY(-3px) rotate(-0.5deg) scaleY(1.02);
-          opacity: 1;
-          box-shadow: 0 0 18px rgba(59, 130, 246, 0.9);
-        }
-        60% { 
-          transform: translateY(2px) rotate(0.3deg) scaleY(0.98);
-          opacity: 0.85;
-          box-shadow: 0 0 8px rgba(59, 130, 246, 0.4);
-        }
-        75% { 
-          transform: translateY(-1px) rotate(-0.2deg) scaleY(1.01);
-          opacity: 0.95;
-          box-shadow: 0 0 12px rgba(59, 130, 246, 0.7);
         }
       }
 
-      /* Connection Points - Advanced Tech Nodes */
+      /* Optimized tech anchors */
       .tech-anchor {
         position: absolute;
-        width: 16px;
-        height: 16px;
+        width: 12px;
+        height: 12px;
         background: radial-gradient(circle, var(--accent-primary), #1d4ed8);
         border-radius: 50%;
-        border: 3px solid rgba(255, 255, 255, 0.9);
-        box-shadow: 
-          0 0 25px rgba(59, 130, 246, 0.9),
-          0 0 50px rgba(59, 130, 246, 0.5),
-          inset 0 2px 4px rgba(255, 255, 255, 0.3);
-        animation: techAnchorPulse 2.5s ease-in-out infinite;
+        border: 2px solid rgba(255, 255, 255, 0.8);
+        box-shadow: 0 0 15px rgba(59, 130, 246, 0.6);
+        animation: techAnchorPulse 3s ease-in-out infinite;
         z-index: 10;
+        will-change: transform;
       }
 
-      /* Advanced tech anchors with connection lines */
       .tech-anchor-1 {
-        top: -155px;
+        top: -125px;
         left: 25%;
         transform: translateX(-50%);
         animation-delay: 0s;
       }
 
-      .tech-anchor-1::before {
-        content: '';
-        position: absolute;
-        top: 50%;
-        left: 100%;
-        width: 60px;
-        height: 2px;
-        background: linear-gradient(90deg, rgba(59, 130, 246, 0.8), transparent);
-        transform: translateY(-50%);
-        animation: connectionPulse 3s ease-in-out infinite;
-      }
-
       .tech-anchor-2 {
-        top: -125px;
+        top: -105px;
         left: 50%;
         transform: translateX(-50%);
-        animation-delay: 0.8s;
-      }
-
-      .tech-anchor-2::before {
-        content: '';
-        position: absolute;
-        top: 100%;
-        left: 50%;
-        width: 2px;
-        height: 40px;
-        background: linear-gradient(180deg, rgba(96, 165, 250, 0.8), transparent);
-        transform: translateX(-50%);
-        animation: connectionPulse 3s ease-in-out infinite 0.5s;
+        animation-delay: 1s;
       }
 
       .tech-anchor-3 {
-        top: -145px;
+        top: -115px;
         right: 25%;
         transform: translateX(50%);
-        animation-delay: 1.6s;
-      }
-
-      .tech-anchor-3::before {
-        content: '';
-        position: absolute;
-        top: 50%;
-        right: 100%;
-        width: 60px;
-        height: 2px;
-        background: linear-gradient(90deg, transparent, rgba(37, 99, 235, 0.8));
-        transform: translateY(-50%);
-        animation: connectionPulse 3s ease-in-out infinite 1s;
+        animation-delay: 2s;
       }
 
       .tech-anchor-4 {
-        top: -105px;
+        top: -85px;
         left: 15%;
         transform: translateX(-50%);
-        animation-delay: 0.4s;
-        width: 12px;
-        height: 12px;
+        animation-delay: 0.5s;
+        width: 8px;
+        height: 8px;
       }
 
       .tech-anchor-5 {
-        top: -115px;
+        top: -95px;
         right: 15%;
         transform: translateX(50%);
-        animation-delay: 1.2s;
-        width: 12px;
-        height: 12px;
+        animation-delay: 1.5s;
+        width: 8px;
+        height: 8px;
       }
 
       .tech-anchor-6 {
-        top: -85px;
+        top: -75px;
         left: 35%;
         transform: translateX(-50%);
-        animation-delay: 2s;
-        width: 10px;
-        height: 10px;
+        animation-delay: 2.5s;
+        width: 6px;
+        height: 6px;
         background: radial-gradient(circle, #818cf8, #6366f1);
       }
 
       .tech-anchor-7 {
-        top: -95px;
+        top: -80px;
         right: 35%;
         transform: translateX(50%);
-        animation-delay: 2.4s;
-        width: 10px;
-        height: 10px;
+        animation-delay: 3s;
+        width: 6px;
+        height: 6px;
         background: radial-gradient(circle, #a78bfa, #8b5cf6);
       }
 
-      /* Avatar connection points */
+      /* Simplified tech anchor animation */
+      @keyframes techAnchorPulse {
+        0%, 100% { 
+          transform: translateX(-50%) scale(1);
+          box-shadow: 0 0 15px rgba(59, 130, 246, 0.6);
+        }
+        50% { 
+          transform: translateX(-50%) scale(1.2);
+          box-shadow: 0 0 20px rgba(59, 130, 246, 0.8);
+        }
+      }
+
+      /* Simplified avatar connections */
       .hero-avatar::before {
         content: '';
         position: absolute;
-        top: -5px;
+        top: -3px;
         left: 20%;
-        width: 8px;
-        height: 8px;
+        width: 6px;
+        height: 6px;
         background: radial-gradient(circle, #60a5fa, #3b82f6);
         border-radius: 50%;
-        box-shadow: 0 0 15px rgba(96, 165, 250, 0.8);
+        box-shadow: 0 0 10px rgba(96, 165, 250, 0.6);
         animation: avatarConnection 2s ease-in-out infinite;
         z-index: 15;
       }
@@ -848,13 +750,13 @@
       .hero-avatar::after {
         content: '';
         position: absolute;
-        top: -5px;
+        top: -3px;
         right: 20%;
-        width: 8px;
-        height: 8px;
+        width: 6px;
+        height: 6px;
         background: radial-gradient(circle, #2563eb, #1e40af);
         border-radius: 50%;
-        box-shadow: 0 0 15px rgba(37, 99, 235, 0.8);
+        box-shadow: 0 0 10px rgba(37, 99, 235, 0.6);
         animation: avatarConnection 2s ease-in-out infinite 1s;
         z-index: 15;
       }
@@ -862,73 +764,26 @@
       @keyframes avatarConnection {
         0%, 100% { 
           transform: scale(1);
-          box-shadow: 0 0 15px rgba(59, 130, 246, 0.8);
+          opacity: 0.8;
         }
         50% { 
-          transform: scale(1.4);
-          box-shadow: 0 0 25px rgba(59, 130, 246, 1);
-        }
-      }
-
-      @keyframes connectionPulse {
-        0%, 100% { 
-          opacity: 0.3;
-          transform: scaleX(1);
-        }
-        50% { 
+          transform: scale(1.3);
           opacity: 1;
-          transform: scaleX(1.2);
         }
       }
 
-      /* Tech anchor pulse animation */
-      @keyframes techAnchorPulse {
-        0%, 100% { 
-          transform: translateX(-50%) scale(1) rotate(0deg);
-          box-shadow: 
-            0 0 25px rgba(59, 130, 246, 0.9),
-            0 0 50px rgba(59, 130, 246, 0.5),
-            inset 0 2px 4px rgba(255, 255, 255, 0.3);
-          background: radial-gradient(circle, var(--accent-primary), #1d4ed8);
-        }
-        25% { 
-          transform: translateX(-50%) scale(1.3) rotate(90deg);
-          box-shadow: 
-            0 0 35px rgba(59, 130, 246, 1),
-            0 0 70px rgba(59, 130, 246, 0.7),
-            inset 0 3px 6px rgba(255, 255, 255, 0.5);
-          background: radial-gradient(circle, #60a5fa, var(--accent-primary));
-        }
-        50% { 
-          transform: translateX(-50%) scale(1.5) rotate(180deg);
-          box-shadow: 
-            0 0 45px rgba(59, 130, 246, 1.2),
-            0 0 90px rgba(59, 130, 246, 0.9),
-            inset 0 4px 8px rgba(255, 255, 255, 0.6);
-          background: radial-gradient(circle, #93c5fd, #60a5fa);
-        }
-        75% { 
-          transform: translateX(-50%) scale(1.3) rotate(270deg);
-          box-shadow: 
-            0 0 35px rgba(59, 130, 246, 1),
-            0 0 70px rgba(59, 130, 246, 0.7),
-            inset 0 3px 6px rgba(255, 255, 255, 0.5);
-          background: radial-gradient(circle, #60a5fa, var(--accent-primary));
-        }
-      }
-
-      /* Data particles effect */
+      /* Simplified data particles */
       .tech-anchor::before {
         content: '';
         position: absolute;
         top: 50%;
         left: 50%;
-        width: 6px;
-        height: 6px;
+        width: 3px;
+        height: 3px;
         background: rgba(255, 255, 255, 0.9);
         border-radius: 50%;
         transform: translate(-50%, -50%);
-        animation: dataFlow 1.5s linear infinite;
+        animation: dataFlow 2s linear infinite;
       }
 
       @keyframes dataFlow {
@@ -936,13 +791,9 @@
           opacity: 1;
           transform: translate(-50%, -50%) scale(1);
         }
-        50% { 
-          opacity: 0.5;
-          transform: translate(-50%, -50%) scale(1.8);
-        }
         100% { 
           opacity: 0;
-          transform: translate(-50%, -50%) scale(2.5);
+          transform: translate(-50%, -50%) scale(2);
         }
       }
 
@@ -1491,16 +1342,36 @@
       /* Mobile First Responsive Design */
       @media (max-width: 480px) {
         .navbar {
+          position: fixed !important;
+          top: 0 !important;
+          left: 0 !important;
+          right: 0 !important;
+          z-index: 1000;
           padding: 0.8rem 1rem;
           min-height: 50px;
+          visibility: visible !important;
+          opacity: 1 !important;
+          width: 100vw !important;
+          animation: none; /* Disable animation on mobile for immediate visibility */
+          transform: translateY(0) !important;
+          display: flex !important;
+          justify-content: space-between !important;
+          align-items: center !important;
+          box-sizing: border-box !important;
         }
         
         .nav-logo {
           gap: 0.5rem;
+          flex-shrink: 0 !important;
+          max-width: calc(100% - 60px) !important;
+          overflow: hidden !important;
         }
         
         .nav-title {
           font-size: 1.1rem;
+          white-space: nowrap !important;
+          overflow: hidden !important;
+          text-overflow: ellipsis !important;
         }
         
         .navbar .avatar {
@@ -1510,13 +1381,28 @@
         }
         
         .mobile-menu-btn {
-          display: block;
-          font-size: 1.2rem;
-          padding: 0.3rem;
+          display: block !important;
+          background: var(--accent-primary) !important;
+          color: white !important;
+          border: none !important;
+          font-size: 1.2rem !important;
+          padding: 0.5rem !important;
+          border-radius: 4px !important;
+          cursor: pointer !important;
+          position: relative !important;
+          z-index: 1002 !important;
+          opacity: 1 !important;
+          visibility: visible !important;
+          transform: translateY(0) !important;
+          animation: none !important;
+          width: 40px !important;
+          height: 40px !important;
+          flex-shrink: 0 !important;
+          margin-left: auto !important;
         }
         
         .nav-links {
-          display: none;
+          display: none !important;
           position: absolute;
           top: 100%;
           left: 0;
@@ -1533,6 +1419,9 @@
           max-height: 60vh;
           overflow-y: auto;
           z-index: 999;
+          order: 2;
+          width: 100%;
+          box-sizing: border-box;
         }
         
         .nav-links.mobile-open {
@@ -1654,22 +1543,30 @@
           display: none;
         }
         
-        /* Mobile-specific animation with less upward movement */
+        /* Disable circuit background on mobile for performance */
+        .hero-avatar-container::before {
+          display: none;
+        }
+        
+        /* Reduce tech lines on mobile */
+        .hanging-line-6,
+        .hanging-line-7 {
+          display: none;
+        }
+        
+        .tech-anchor-6,
+        .tech-anchor-7 {
+          display: none;
+        }
+        
+        /* Mobile-specific animation with minimal movement */
         @keyframes hangingSwingMobile {
           0%, 100% { 
-            transform: translateY(0px) rotate(0deg) scale(1); 
+            transform: translateY(0px) scale(1); 
             box-shadow: 0 12px 48px rgba(59, 130, 246, 0.4);
           }
-          25% { 
-            transform: translateY(-4px) rotate(-1deg) scale(1.005); 
-            box-shadow: 0 15px 50px rgba(59, 130, 246, 0.45);
-          }
           50% { 
-            transform: translateY(-6px) rotate(0deg) scale(1.01); 
-            box-shadow: 0 18px 55px rgba(59, 130, 246, 0.5);
-          }
-          75% { 
-            transform: translateY(-4px) rotate(1deg) scale(1.005); 
+            transform: translateY(-3px) scale(1.005); 
             box-shadow: 0 15px 50px rgba(59, 130, 246, 0.45);
           }
         }
@@ -1779,8 +1676,19 @@
       
       @media (min-width: 481px) and (max-width: 768px) {
         .navbar {
+          position: fixed;
+          top: 0;
+          left: 0;
+          right: 0;
+          z-index: 1000;
           padding: 1rem 1.5rem;
           min-height: 55px;
+          visibility: visible;
+          opacity: 1;
+          width: 100%;
+          justify-content: space-between;
+          display: flex;
+          align-items: center;
         }
         
         .nav-logo {
@@ -1797,9 +1705,18 @@
         }
         
         .mobile-menu-btn {
-          display: block;
+          display: block !important;
           font-size: 1.3rem;
           padding: 0.4rem;
+          position: relative;
+          z-index: 1001;
+          flex-shrink: 0;
+          margin-left: auto;
+          order: 3;
+          opacity: 1 !important;
+          visibility: visible !important;
+          transform: translateY(0) !important;
+          animation: none !important;
         }
         
         .nav-links {
@@ -1811,13 +1728,13 @@
           background: var(--bg-tertiary);
           backdrop-filter: blur(20px);
           flex-direction: column;
-          padding: 1.2rem;
-          gap: 0.8rem;
+          padding: 1.5rem;
+          gap: 1rem;
           box-shadow: 0 8px 32px var(--shadow-color);
           border-top: 1px solid var(--border-color);
           border-radius: 0 0 16px 16px;
           animation: none;
-          max-height: 70vh;
+          max-height: 75vh;
           overflow-y: auto;
           z-index: 999;
         }
@@ -1915,22 +1832,14 @@
         .tech-anchor-6 { top: -65px; }
         .tech-anchor-7 { top: -75px; }
         
-        /* Tablet-specific animation with moderate upward movement */
+        /* Tablet-specific animation with moderate movement */
         @keyframes hangingSwingTablet {
           0%, 100% { 
-            transform: translateY(0px) rotate(0deg) scale(1); 
+            transform: translateY(0px) scale(1); 
             box-shadow: 0 12px 48px rgba(59, 130, 246, 0.4);
           }
-          25% { 
-            transform: translateY(-6px) rotate(-1.5deg) scale(1.008); 
-            box-shadow: 0 16px 52px rgba(59, 130, 246, 0.48);
-          }
           50% { 
-            transform: translateY(-10px) rotate(0deg) scale(1.015); 
-            box-shadow: 0 20px 58px rgba(59, 130, 246, 0.55);
-          }
-          75% { 
-            transform: translateY(-6px) rotate(1.5deg) scale(1.008); 
+            transform: translateY(-6px) scale(1.008); 
             box-shadow: 0 16px 52px rgba(59, 130, 246, 0.48);
           }
         }
@@ -1966,8 +1875,16 @@
       
       @media (min-width: 769px) and (max-width: 1024px) {
         .navbar {
+          position: fixed;
+          top: 0;
+          left: 0;
+          right: 0;
+          z-index: 1000;
           padding: 1.1rem 1.8rem;
           min-height: 60px;
+          visibility: visible;
+          opacity: 1;
+          width: 100%;
         }
         
         .nav-links {
@@ -2028,23 +1945,15 @@
           animation: hangingSwingLargeTablet 4s ease-in-out infinite;
         }
         
-        /* Large tablet animation - closer to desktop but still restrained */
+        /* Large tablet animation - simplified */
         @keyframes hangingSwingLargeTablet {
           0%, 100% { 
-            transform: translateY(0px) rotate(0deg) scale(1); 
+            transform: translateY(0px) scale(1); 
             box-shadow: 0 12px 48px rgba(59, 130, 246, 0.4);
           }
-          25% { 
-            transform: translateY(-7px) rotate(-1.8deg) scale(1.01); 
-            box-shadow: 0 17px 53px rgba(59, 130, 246, 0.48);
-          }
           50% { 
-            transform: translateY(-12px) rotate(0deg) scale(1.018); 
-            box-shadow: 0 22px 60px rgba(59, 130, 246, 0.58);
-          }
-          75% { 
-            transform: translateY(-7px) rotate(1.8deg) scale(1.01); 
-            box-shadow: 0 17px 53px rgba(59, 130, 246, 0.48);
+            transform: translateY(-8px) scale(1.01); 
+            box-shadow: 0 18px 55px rgba(59, 130, 246, 0.5);
           }
         }
         .container {
@@ -2170,8 +2079,16 @@
         }
         
         .navbar {
+          position: fixed;
+          top: 0;
+          left: 0;
+          right: 0;
+          z-index: 1000;
           padding: 1.2rem 2rem;
           min-height: 70px;
+          visibility: visible;
+          opacity: 1;
+          width: 100%;
         }
         
         .hero {
@@ -2183,10 +2100,57 @@
           animation: hangingSwing 4s ease-in-out infinite;
         }
       }
+
+      /* Respect user's preference for reduced motion */
+      @media (prefers-reduced-motion: reduce) {
+        .hanging-line,
+        .tech-anchor,
+        .hero-avatar,
+        .hero-avatar::before,
+        .hero-avatar::after,
+        .hero-avatar-container::before {
+          animation: none !important;
+        }
+        
+        .hanging-line {
+          opacity: 0.6;
+        }
+        
+        .tech-anchor {
+          transform: translateX(-50%) scale(1);
+        }
+      }
+
+      /* Force mobile menu button to be immediately visible on page load */
+      @media (max-width: 768px) {
+        .mobile-menu-btn {
+          display: block !important;
+          opacity: 1 !important;
+          visibility: visible !important;
+          transform: none !important;
+          animation: none !important;
+          will-change: auto;
+        }
+        
+        .navbar {
+          /* Prevent navbar animation from affecting button visibility */
+          animation-delay: 0s !important;
+        }
+      }
     </style>
     <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
     <script>
       document.addEventListener('DOMContentLoaded', function() {
+        // Force mobile menu button to be visible immediately
+        const mobileBtn = document.querySelector('.mobile-menu-btn');
+        if (mobileBtn && window.innerWidth <= 768) {
+          mobileBtn.style.display = 'block';
+          mobileBtn.style.opacity = '1';
+          mobileBtn.style.visibility = 'visible';
+          mobileBtn.style.transform = 'translateY(0)';
+          mobileBtn.style.animation = 'none';
+        }
+
         // Initialize AOS
         AOS.init({
           duration: 800,
@@ -2470,10 +2434,7 @@
                   <i class="fas fa-robot skill-icon"></i>
                   <span class="skill-name">Appium</span>
                 </div>
-                <div class="skill-item">
-                  <i class="fab fa-google skill-icon" style="color: #ffca28;"></i>
-                  <span class="skill-name">Firebase</span>
-                </div>
+                <div class="fab fa-google skill-icon" style="color: #ffca28;"></div>
                 <div class="skill-item">
                   <i class="fab fa-figma skill-icon"></i>
                   <span class="skill-name">Figma</span>
@@ -2986,16 +2947,14 @@
         }
         .footer-content {
           max-width: 1000px;
-          margin: auto;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          gap: 1.5rem;
+          margin: 0 auto;
+          text-align: center;
         }
         .footer-logo {
           font-size: 1.5rem;
           font-weight: 700;
           color: #3b82f6;
+          margin-bottom: 1rem;
         }
         .footer-links {
           display: flex;
@@ -3044,7 +3003,15 @@
             padding: 3rem 1rem 2rem 1rem;
           }
           .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
             padding: 0.7rem 1rem;
+            visibility: visible;
+            opacity: 1;
+            width: 100%;
           }
           .projects-grid {
             grid-template-columns: 1fr;
@@ -3241,6 +3208,6 @@
             transform: scale(1) rotate(0deg);
           }
         }
-      </style>
+    </style>
   </body>
 </html>
