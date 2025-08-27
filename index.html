@@ -108,6 +108,59 @@
         animation-play-state: paused;
       }
 
+      .game-canvas {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        pointer-events: none;
+        z-index: 9998;
+        opacity: 0;
+        transition: opacity 0.5s ease;
+        background: transparent;
+      }
+
+      .game-canvas.active {
+        opacity: 1;
+        pointer-events: all;
+      }
+
+      /* Mobile optimizations for game canvas */
+      @media (max-width: 768px) {
+        .game-canvas {
+          /* Ensure proper touch handling on mobile */
+          touch-action: none;
+          -webkit-touch-callout: none;
+          -webkit-user-select: none;
+          -khtml-user-select: none;
+          -moz-user-select: none;
+          -ms-user-select: none;
+          user-select: none;
+        }
+        
+        .game-canvas.active {
+          /* Prevent mobile browser UI from interfering */
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100vw;
+          height: 100vh;
+          z-index: 9999;
+        }
+      }
+
+      /* Add visual feedback for hero avatar clicks */
+      .hero-avatar.click-feedback {
+        animation: avatarClickPulse 0.3s ease;
+      }
+
+      @keyframes avatarClickPulse {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.1); box-shadow: 0 0 30px rgba(59, 130, 246, 0.8); }
+        100% { transform: scale(1); }
+      }
+
       /* Theme toggle responsive positioning */
       @media (max-width: 768px) {
         .theme-toggle {
@@ -2282,6 +2335,334 @@
         };
         
         setTimeout(typeWriter, 1000);
+
+        // Profile Avatar Interactive Stars Effect (Triple Click)
+        const heroAvatar = document.querySelector('.hero-avatar');
+        const gameCanvas = document.getElementById('gameCanvas');
+        const ctx = gameCanvas.getContext('2d');
+        
+        let isStarsActive = false;
+        let animationId;
+        let stars = [];
+        let dots = [];
+        let initStarsPopulation = 80;
+        let dotsMinDist = 2;
+        let mouseMoving = false;
+        let mouseMoveChecker;
+        let mouseX = 0;
+        let mouseY = 0;
+        let WIDTH, HEIGHT;
+        
+        // Detect mobile device for optimizations
+        const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth <= 768;
+        
+        // Adjust parameters for mobile
+        if (isMobile) {
+          initStarsPopulation = 50; // Fewer stars for better performance
+          dotsMinDist = 4; // Larger minimum distance for easier touch interaction
+        }
+        
+        // Triple click detection
+        let clickCount = 0;
+        let clickTimer = null;
+        const clickDelay = 500; // Time window for triple click (ms)
+        
+        let params = {
+          maxDistFromCursor: isMobile ? 30 : 50, // Smaller variation on mobile for precision
+          dotsSpeed: 0,
+          backgroundSpeed: 0
+        };
+        
+        // Set canvas size
+        function setCanvasSize() {
+          WIDTH = window.innerWidth;
+          HEIGHT = window.innerHeight;
+          
+          // Account for mobile browser UI changes
+          if (isMobile) {
+            HEIGHT = Math.max(window.innerHeight, screen.height);
+          }
+          
+          gameCanvas.width = WIDTH;
+          gameCanvas.height = HEIGHT;
+        }
+        
+        // Star constructor (exact from CodePen)
+        function Star(id, x, y) {
+          this.id = id;
+          this.x = x;
+          this.y = y;
+          this.r = Math.floor(Math.random() * 2) + 1;
+          var alpha = (Math.floor(Math.random() * 10) + 1) / 10 / 2;
+          this.color = "rgba(255,255,255," + alpha + ")";
+        }
+        
+        Star.prototype.draw = function() {
+          ctx.fillStyle = this.color;
+          ctx.shadowBlur = this.r * 2;
+          ctx.shadowColor = "white";
+          ctx.beginPath();
+          ctx.arc(this.x, this.y, this.r, 0, 2 * Math.PI, false);
+          ctx.closePath();
+          ctx.fill();
+        };
+        
+        Star.prototype.move = function() {
+          this.y -= .15 + params.backgroundSpeed / 100;
+          if (this.y <= -10) this.y = HEIGHT + 10;
+          this.draw();
+        };
+        
+        // Dot constructor (exact from CodePen)
+        function Dot(id, x, y, r) {
+          this.id = id;
+          this.x = x;
+          this.y = y;
+          this.r = Math.floor(Math.random() * 5) + 1;
+          this.maxLinks = 2;
+          this.speed = .5;
+          this.a = .5;
+          this.aReduction = .005;
+          this.color = "rgba(255,255,255," + this.a + ")";
+          this.linkColor = "rgba(255,255,255," + this.a / 4 + ")";
+          this.dir = Math.floor(Math.random() * 140) + 200;
+        }
+        
+        Dot.prototype.draw = function() {
+          ctx.fillStyle = this.color;
+          ctx.shadowBlur = this.r * 2;
+          ctx.shadowColor = "white";
+          ctx.beginPath();
+          ctx.arc(this.x, this.y, this.r, 0, 2 * Math.PI, false);
+          ctx.closePath();
+          ctx.fill();
+        };
+        
+        Dot.prototype.link = function() {
+          if (this.id == 0) return;
+          var previousDot1 = getPreviousDot(this.id, 1);
+          var previousDot2 = getPreviousDot(this.id, 2);
+          var previousDot3 = getPreviousDot(this.id, 3);
+          if (!previousDot1) return;
+          ctx.strokeStyle = this.linkColor;
+          ctx.moveTo(previousDot1.x, previousDot1.y);
+          ctx.beginPath();
+          ctx.lineTo(this.x, this.y);
+          if (previousDot2 != false) ctx.lineTo(previousDot2.x, previousDot2.y);
+          if (previousDot3 != false) ctx.lineTo(previousDot3.x, previousDot3.y);
+          ctx.stroke();
+          ctx.closePath();
+        };
+        
+        function getPreviousDot(id, stepback) {
+          if (id == 0 || id - stepback < 0) return false;
+          if (typeof dots[id - stepback] != "undefined") return dots[id - stepback];
+          else return false;
+        }
+        
+        Dot.prototype.move = function() {
+          this.a -= this.aReduction;
+          if (this.a <= 0) {
+            this.die();
+            return;
+          }
+          this.color = "rgba(255,255,255," + this.a + ")";
+          this.linkColor = "rgba(255,255,255," + this.a / 4 + ")";
+          this.x = this.x + Math.cos(degToRad(this.dir)) * (this.speed + params.dotsSpeed / 100);
+          this.y = this.y + Math.sin(degToRad(this.dir)) * (this.speed + params.dotsSpeed / 100);
+          this.draw();
+          this.link();
+        };
+        
+        Dot.prototype.die = function() {
+          dots[this.id] = null;
+          delete dots[this.id];
+        };
+        
+        function degToRad(degree) {
+          return degree * (Math.PI / 180);
+        }
+        
+        // Initialize stars
+        function init() {
+          ctx.strokeStyle = "white";
+          ctx.shadowColor = "white";
+          for (var i = 0; i < initStarsPopulation; i++) {
+            stars[i] = new Star(i, Math.floor(Math.random() * WIDTH), Math.floor(Math.random() * HEIGHT));
+          }
+          ctx.shadowBlur = 0;
+          animate();
+        }
+        
+        // Animation loop (exact from CodePen)
+        function animate() {
+          if (!isStarsActive) return;
+          
+          ctx.clearRect(0, 0, WIDTH, HEIGHT);
+          
+          for (var i in stars) {
+            stars[i].move();
+          }
+          for (var i in dots) {
+            dots[i].move();
+          }
+          drawIfMouseMoving();
+          animationId = requestAnimationFrame(animate);
+        }
+        
+        // Mouse movement handler (exact from CodePen)
+        function onMouseMove(e) {
+          mouseMoving = true;
+          mouseX = e.clientX;
+          mouseY = e.clientY;
+          clearInterval(mouseMoveChecker);
+          mouseMoveChecker = setTimeout(function() {
+            mouseMoving = false;
+          }, 100);
+        }
+
+        // Touch movement handler for mobile devices
+        function onTouchMove(e) {
+          e.preventDefault(); // Prevent scrolling
+          mouseMoving = true;
+          const touch = e.touches[0];
+          mouseX = touch.clientX;
+          mouseY = touch.clientY;
+          clearInterval(mouseMoveChecker);
+          mouseMoveChecker = setTimeout(function() {
+            mouseMoving = false;
+          }, 100);
+        }
+        
+        function drawIfMouseMoving() {
+          if (!mouseMoving) return;
+          
+          if (dots.length == 0) {
+            dots[0] = new Dot(0, mouseX, mouseY);
+            dots[0].draw();
+            return;
+          }
+          
+          var previousDot = getPreviousDot(dots.length, 1);
+          var prevX = previousDot.x;
+          var prevY = previousDot.y;
+          
+          var diffX = Math.abs(prevX - mouseX);
+          var diffY = Math.abs(prevY - mouseY);
+          
+          if (diffX < dotsMinDist || diffY < dotsMinDist) return;
+          
+          var xVariation = Math.random() > .5 ? -1 : 1;
+          xVariation = xVariation * Math.floor(Math.random() * params.maxDistFromCursor) + 1;
+          var yVariation = Math.random() > .5 ? -1 : 1;
+          yVariation = yVariation * Math.floor(Math.random() * params.maxDistFromCursor) + 1;
+          
+          dots[dots.length] = new Dot(dots.length, mouseX + xVariation, mouseY + yVariation);
+          dots[dots.length - 1].draw();
+        }
+        
+        // Triple click handler for hero avatar
+        heroAvatar.addEventListener('click', function(e) {
+          // Add visual feedback for each click
+          heroAvatar.classList.add('click-feedback');
+          setTimeout(() => {
+            heroAvatar.classList.remove('click-feedback');
+          }, 300);
+          
+          // If stars are already active, any click should exit
+          if (isStarsActive) {
+            // Stop stars effect
+            isStarsActive = false;
+            gameCanvas.classList.remove('active');
+            gameCanvas.style.cursor = 'default';
+            
+            // Remove mouse and touch listeners
+            gameCanvas.removeEventListener('mousemove', onMouseMove);
+            gameCanvas.removeEventListener('touchmove', onTouchMove);
+            gameCanvas.removeEventListener('touchstart', onTouchMove);
+            
+            // Stop animation
+            if (animationId) {
+              cancelAnimationFrame(animationId);
+              animationId = null;
+            }
+            
+            // Clear canvas
+            ctx.clearRect(0, 0, gameCanvas.width, gameCanvas.height);
+            
+            // Reset arrays
+            stars = [];
+            dots = [];
+            
+            // Reset click count
+            clickCount = 0;
+            if (clickTimer) {
+              clearTimeout(clickTimer);
+              clickTimer = null;
+            }
+            
+            console.log('🌟 Back to normal portfolio view');
+            return;
+          }
+          
+          // If stars are not active, count clicks for activation
+          clickCount++;
+          
+          // Clear existing timer
+          if (clickTimer) {
+            clearTimeout(clickTimer);
+          }
+          
+          // If we have 3 clicks, activate stars
+          if (clickCount === 3) {
+            // Start stars effect
+            isStarsActive = true;
+            gameCanvas.classList.add('active');
+            gameCanvas.style.cursor = 'none';
+            
+            // Set canvas size
+            setCanvasSize();
+            
+            // Initialize stars and dots
+            stars = [];
+            dots = [];
+            init();
+            
+            // Add mouse and touch listeners
+            gameCanvas.addEventListener('mousemove', onMouseMove);
+            gameCanvas.addEventListener('touchmove', onTouchMove, { passive: false });
+            gameCanvas.addEventListener('touchstart', onTouchMove, { passive: false });
+            
+            // Show notification
+            const message = isMobile 
+              ? '✨ Interactive Stars Mode Activated! Touch and drag to create magic! Tap avatar again to exit. ✨'
+              : '✨ Interactive Stars Mode Activated! Move your mouse to create magic! Click avatar again to exit. ✨';
+            console.log(message);
+            
+            clickCount = 0; // Reset click count
+          } else {
+            // Set timer to reset click count if not triple clicked in time
+            clickTimer = setTimeout(() => {
+              clickCount = 0;
+            }, clickDelay);
+          }
+        });
+        
+        // ESC key to exit
+        document.addEventListener('keydown', function(e) {
+          if (e.key === 'Escape' && isStarsActive) {
+            // Simulate triple click to exit
+            clickCount = 3;
+            heroAvatar.click();
+          }
+        });
+        
+        // Resize handler
+        window.addEventListener('resize', function() {
+          if (isStarsActive) {
+            setCanvasSize();
+          }
+        });
       });
     </script>
   </head>
@@ -2290,6 +2671,9 @@
       <button class="theme-toggle" id="themeToggle">
         <i class="fas fa-palette"></i>
       </button>
+
+      <!-- Animation Canvas for Effects -->
+      <canvas id="gameCanvas" class="game-canvas"></canvas>
       
       <nav class="navbar">
         <div class="nav-logo">
